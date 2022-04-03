@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
   zookepeer:
     image: wurstmeister/zookeeper:3.4.6
@@ -43,7 +43,7 @@ services:
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
       - POSTGRES_DB=test
-  app1:
+  app_mongodb:
     container_name: app_mongodb
     build: ./app_mongodb
     ports:
@@ -51,14 +51,14 @@ services:
     volumes:
       - ./app_mongodb:/app
     environment:
-      - PORT = 8080
+      - PORT=8080
       - MONGO_URL=mongodb://mongo:27017/test
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_TOPIC=auth_service
     depends_on:
       - mongo
       - kafka
-  app2:
+  app_postgres:
     container_name: app_postgres
     build: ./app_postgres
     ports:
@@ -66,7 +66,7 @@ services:
     volumes:
       - ./app_postgres:/app
     environment:
-      - PORT = 8081
+      - PORT=8081
       - POSTGRES_URL=postgres://test:test@postgres:5432/test
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_TOPIC=auth_service
