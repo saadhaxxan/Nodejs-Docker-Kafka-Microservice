@@ -43,3 +43,33 @@ services:
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
       - POSTGRES_DB=test
+  app1:
+    container_name: app_mongodb
+    build: ./app_mongodb
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app_mongodb:/app
+    environment:
+      - PORT = 8080
+      - MONGO_URL=mongodb://mongo:27017/test
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_TOPIC=auth_service
+    depends_on:
+      - mongo
+      - kafka
+  app2:
+    container_name: app_postgres
+    build: ./app_postgres
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./app_postgres:/app
+    environment:
+      - PORT = 8081
+      - POSTGRES_URL=postgres://test:test@postgres:5432/test
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_TOPIC=auth_service
+    depends_on:
+      - postgres
+      - kafka
