@@ -1,20 +1,22 @@
-version: '3.3'
+version: '3'
 services:
-  zookepeer:
-    image: wurstmeister/zookeeper:3.4.6
+  zookeeper:
+    image: wurstmeister/zookeeper
     container_name: zookeeper
     ports:
-      - "2181:2181"
-    restart: always
+      - 2181:2181
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
+    hostname: kafka
     ports:
-      - "9092:9092"
+      - 9092:9092
+    depends_on:
+      - zookeeper
     volumes:
       - ./data/kafka:/var/run/docker.sock
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ADVERTISED_HOST_NAME=127.0.0.1
       - KAFKA_ADVERTISED_PORT=9092
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
   mongo:
@@ -25,12 +27,6 @@ services:
     restart: always
     volumes:
       - ./data/mongo:/data/db
-    environment:
-      - MONGO_INITDB_DATABASE=test
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGO_INITDB_USERNAME=test
-      - MONGO_INITDB_PASSWORD=test
   postgres:
     image: postgres
     container_name: postgres
@@ -43,30 +39,30 @@ services:
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
       - POSTGRES_DB=test
-  app_mongodb:
-    container_name: app_mongodb
-    build: ./app_mongodb
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./app_mongodb:/app
-    environment:
-      - PORT=8080
-      - MONGO_URL=mongodb://mongo:27017/test
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-      - KAFKA_TOPIC=auth_service
-    depends_on:
-      - mongo
-      - kafka
+#   app_mongodb:
+#     container_name: app_mongodb
+#     build: ./app_mongodb
+#     ports:
+#       - "8080:8080"
+#     volumes:
+#       - ./app_mongodb:/app
+#     environment:
+#       - PORT=8080
+#       - MONGO_URL=mongodb://mongo:27017/test
+#       - KAFKA_BOOTSTRAP_SERVERS=kafka:8000
+#       - KAFKA_TOPIC=auth_service
+#     depends_on:
+#       - mongo
+#      - kafka
   app_postgres:
     container_name: app_postgres
     build: ./app_postgres
     ports:
-      - "8081:8080"
+      - "8080:8080"
     volumes:
       - ./app_postgres:/app
     environment:
-      - PORT=8081
+      - PORT=8080
       - POSTGRES_URL=postgres://test:test@postgres:5432/test
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_TOPIC=auth_service

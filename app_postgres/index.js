@@ -7,12 +7,18 @@ app = express();
 
 const producer = new kafka.Producer(new kafka.KafkaClient(process.env.KAFKA_BOOTSTRAP_SERVERS));
 
-const servicesRunning = () => {
 producer.on('ready', function () {
     console.log('Producer is ready');
 });
-};
-setInterval(servicesRunning, 10000);
+
+producer.on('error', err => {
+    console.log(err);
+  });
+
+app.get('/',(req,res)=>{
+    res.send("Postgres App Running")
+})
+
 
 app.listen(process.env.PORT, () => {
     console.log(`listening on port ${process.env.PORT}`);
