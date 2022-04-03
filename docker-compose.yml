@@ -16,7 +16,7 @@ services:
     volumes:
       - ./data/kafka:/var/run/docker.sock
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME=127.0.0.1
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
       - KAFKA_ADVERTISED_PORT=9092
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
   mongo:
