@@ -6,7 +6,7 @@
 </div>
 
 
-<h2>Authentication Microservice that writes data to both Mongodb and Postgres using Kafka Queue</h2>
+<h4>Authentication Microservice that writes data to Mongodb and Postgres using Kafka Queue</h2>
 
 ## Installation steps
 
