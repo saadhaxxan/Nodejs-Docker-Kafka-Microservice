@@ -6,7 +6,6 @@
    <h2>Authentication Microservice that writes data to Mongodb and Postgres using Kafka Queue</h2>
 </div>
 
-<hr>
 ## Installation steps
 
 1. Clone the Repo and install the requirements
