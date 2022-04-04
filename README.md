@@ -11,7 +11,7 @@
 1. Clone the Repo and install the requirements
 
 ```
-git clone Nodejs-Docker-Kafka-Microservice.git
+git clone https://github.com/saadhaxxan/Nodejs-Docker-Kafka-Microservice.git
 cd app_mongodb && npm install && cd.. && cd app_postgres && npm install
 ```
 
