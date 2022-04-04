@@ -7,7 +7,7 @@ app = express();
 app.use(express.json());
 const servicesRunning = async () =>
 {
-const db = new sequelize('postgres://postgres:postgres@localhost:5432/postgres');
+const db = new sequelize(process.env.POSTGRES_URL);
 const User = db.define('user', {
     id: {
         type: sequelize.INTEGER,
@@ -27,6 +27,7 @@ const User = db.define('user', {
         allowNull: false
     }
 });
+db.sync({force:true});
 const client = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_BOOTSTRAP_SERVERS});
 const producer = new kafka.Producer(client);
 
@@ -38,7 +39,12 @@ producer.on('ready', async () => {
                 console.log(err);
             }
             else{
-                await User.create(req.body).then(function (user) {
+                console.log(data);
+                await User.create({
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: req.body.password
+                }).then(function (user) {
                     res.send(user);
                 }
                 ).catch(function (err) {
