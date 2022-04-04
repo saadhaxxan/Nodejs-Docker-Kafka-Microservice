@@ -15,6 +15,12 @@ git clone https://github.com/saadhaxxan/Nodejs-Docker-Kafka-Microservice.git
 cd app_mongodb && npm install && cd.. && cd app_postgres && npm install
 ```
 
+2. Install Docker from [here](https://docs.docker.com/engine/install/)
+3. Start Docker Compose
+```
+docker-compose up
+```
+
 ## Author
 You can get in touch with me on my LinkedIn Profile:
 
