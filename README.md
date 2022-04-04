@@ -3,11 +3,10 @@
    <div align="center">
     <img src="image.jpg" width='700'/>
   </div>
+   <h2>Authentication Microservice that writes data to Mongodb and Postgres using Kafka Queue</h2>
 </div>
 
-
-<h4>Authentication Microservice that writes data to Mongodb and Postgres using Kafka Queue</h2>
-
+<hr>
 ## Installation steps
 
 1. Clone the Repo and install the requirements
